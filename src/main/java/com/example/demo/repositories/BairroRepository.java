@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.models.BairroModel;
 
-public interface BairroRepository extends JpaRepository<BairroModel, Integer> {
+public interface  BairroRepository extends JpaRepository<BairroModel, Integer>{
     
 }

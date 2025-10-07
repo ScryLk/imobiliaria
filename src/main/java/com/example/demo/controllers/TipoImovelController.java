@@ -18,55 +18,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.demo.models.BairroModel;
-import com.example.demo.services.BairroService;
+import com.example.demo.models.TipoImovelModel;
+import com.example.demo.services.TipoImovelService;
 
 @RestController
-@RequestMapping(value = "/bairros")
-public class BairroController {
+@RequestMapping(value = "/tipoimovel")
+public class TipoImovelController {
 
     @Autowired
-    private BairroService service;
+    private TipoImovelService service;
 
-    @GetMapping()
-    public ResponseEntity<List<BairroModel>> getAllBairros() {
-        List<BairroModel> list = service.getAll();
+    @GetMapping
+    public ResponseEntity<List<TipoImovelModel>> getAll() {
+        List<TipoImovelModel> list = service.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @GetMapping("/bairros-page")
-    public Page<BairroModel> getPosts(Pageable pageable) {
+    @GetMapping("/tipoimovel/page")
+    public Page<TipoImovelModel> getPage(Pageable pageable) {
         return service.getAll(pageable);
     }
 
-
-    @GetMapping(value = "/{id}")
-        public ResponseEntity<BairroModel> find(@PathVariable Integer id) {
-        BairroModel model = service.find(id);
-        return ResponseEntity.status(HttpStatus.OK).body(model);
+    @GetMapping("/{id}")
+    public ResponseEntity<TipoImovelModel> find(@PathVariable Integer id) {
+        TipoImovelModel model = service.find(id);
+        if (model == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(model);
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody BairroModel model) {
+    public ResponseEntity<Void> insert(@RequestBody TipoImovelModel model) {
         model = service.insert(model);
-        // return new ResponseEntity(model, HttpStatus.CREATED);
-        URI uri =
-        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(model.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(model.getId())
+                    .toUri();
         return ResponseEntity.created(uri).build();
-        }
+    }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@RequestBody BairroModel model, @PathVariable Integer id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody TipoImovelModel model, @PathVariable Integer id) {
         model.setId(id);
         model = service.update(model);
+        if (model == null) return ResponseEntity.notFound().build();
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }

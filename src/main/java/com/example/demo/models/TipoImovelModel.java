@@ -1,24 +1,20 @@
 package com.example.demo.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bairros")
+@Table(name = "tipos_imoveis")
 @Getter
 @Setter
-public class BairroModel implements Serializable{
+public class TipoImovelModel implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -27,28 +23,16 @@ public class BairroModel implements Serializable{
 
     private String nome;
 
-    private String cidade;
+    private String descricao;
 
-    private String estado;
 
-    private String cepInicial;
+    public TipoImovelModel(){};
 
-    private String cepFinal;
-
-    @OneToMany(mappedBy = "bairro", orphanRemoval = false)
-    @JsonManagedReference
-    private List<ImovelModel> imoveis = new ArrayList<>();
-
-    public BairroModel(){};
-
-    public BairroModel(int id, String nome, String cidade, String estado, String cepInicial, String cepFinal){
+    public TipoImovelModel(int id, String nome, String descricao){
         super();
         this.id =id;
         this.nome=nome;
-        this.cidade=cidade;
-        this.estado=estado;
-        this.cepInicial=cepInicial;
-        this.cepFinal=cepFinal;
+        this.descricao=descricao;
     }
 
     @Override
@@ -68,7 +52,7 @@ public class BairroModel implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        BairroModel other = (BairroModel) obj;
+        TipoImovelModel other = (TipoImovelModel) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -83,4 +67,5 @@ public class BairroModel implements Serializable{
     }
 
 
+  
 }
